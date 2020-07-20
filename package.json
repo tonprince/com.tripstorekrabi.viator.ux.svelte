@@ -1,0 +1,27 @@
+{
+  "name": "com.tripstorekrabi.viator.itinerary",
+  "version": "1.0.0",
+  "description": "The Svelte web application for Viator UI Design Case Study",
+  "private": true,
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^14.0.0",
+    "@rollup/plugin-node-resolve": "^8.4.0",
+    "framework7": "^5.7.9",
+    "framework7-svelte": "^5.7.9",
+    "intro.js": "^2.9.3",
+    "rollup": "^2.21",
+    "rollup-plugin-livereload": "^1.3",
+    "rollup-plugin-node-builtins": "^2.1.2",
+    "rollup-plugin-svelte": "^5.2",
+    "rollup-plugin-terser": "^6.1",
+    "svelte": "^3.24.0"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "scripts": {
+    "build": "rollup -c",
+    "dev": "rollup -c -w",
+    "start": "node app.js"
+  }
+}
