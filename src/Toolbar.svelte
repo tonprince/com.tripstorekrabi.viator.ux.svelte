@@ -9,10 +9,13 @@
 </script>
 
 <Toolbar style="background-color: hsl(181, 64%, 26%)" position="top">
-  <Link text="An Improved Viator UX" href="/" class={getActiveClass('/')} />
-  <Link text="New UI" href="/New-UI" class={getActiveClass('/New-UI')} />
-  <Link
-    text="Itinerary Editor"
-    href="/Editor"
-    class={getActiveClass('/Editor')} />
+  <img style="margin-left: 20px; height: 20px" alt="Viator" src="/viator.png" />
+  <div style="width: 100%; display: flex; justify-content: space-around;">
+    <Link text="An Improved Viator UX" href="/" class={getActiveClass('/')} />
+    <Link text="New UI" href="/New-UI" class={getActiveClass('/New-UI')} />
+    <Link
+      text="Itinerary Editor"
+      href="/Editor"
+      class={getActiveClass('/Editor')} />
+  </div>
 </Toolbar>

@@ -1,13 +1,15 @@
 <script>
-  import { Page, Link, Toolbar } from "framework7-svelte";
-  import Scroller from "./Scroller.svelte";
+  import { onMount, onDestroy } from "svelte";
+  import { Page, Link, Toolbar, Button, Preloader } from "framework7-svelte";
   import introJs from "intro.js";
-  import { createTour } from "./stores.js";
+  import { createTour, map } from "./stores.js";
   import { default as NavToolbar } from "./Toolbar.svelte";
+  import Map from "./Map.svelte";
 
+  export let f7route;
+  let scrollTo = f7route.params.scrollTo;
   let tour = createTour();
-  var init = false;
-  var index = 0;
+  let heroImage;
 
   let attractions = [
     ...$tour.itineraries
@@ -19,10 +21,64 @@
       }),
     ...$tour.attractions
   ];
-  var smartLinkIntroAdded = false;
+  let center = attractions[0].location;
+  let smartLinkIntroAdded = false;
+  let mapUnsubscribe;
+
+  onMount(async () => {
+    heroImage.onload = () => {
+      if (scrollTo) {
+        let node = document.getElementById(scrollTo);
+        if (node) {
+          node.scrollIntoView({
+            behavior: "smooth"
+          });
+        }
+      }
+    };
+
+    mapUnsubscribe = map.subscribe(function(map) {
+      if (map) {
+        let bounds = new google.maps.LatLngBounds();
+        let infoWindow = new google.maps.InfoWindow();
+        attractions.forEach(function(attraction) {
+          if (attraction.location) {
+            bounds.extend(
+              new google.maps.LatLng({
+                lat: attraction.location.lat,
+                lng: attraction.location.lng
+              })
+            );
+            let marker = new google.maps.Marker({
+              position: attraction.location,
+              map: map,
+              title: attraction.title
+            });
+
+            marker.addListener("click", function(event) {
+              infoWindow.setContent(
+                "<a target='_new' class='external' href='" +
+                  attraction.url +
+                  "'>" +
+                  attraction.title +
+                  "</a>"
+              );
+              infoWindow.open(map, marker);
+            });
+          }
+        });
+
+        map.fitBounds(bounds);
+      }
+    });
+  });
+
+  onDestroy(async () => {
+    mapUnsubscribe();
+  });
 
   function injectSmartLinks(text, attractions) {
-    attractions.forEach(function(attraction, index) {
+    attractions.forEach(function(attraction) {
       let regexp = new RegExp(
         "(w*" + attraction.title + "w*)(?=S*['’])?([a-zA-Z'’]+)?",
         "gmi"
@@ -50,10 +106,6 @@
 </script>
 
 <style>
-  :global(.toolbar-inner) {
-    justify-content: space-around;
-  }
-
   .hero {
     margin-top: 20px;
     margin-bottom: 10px;
@@ -78,6 +130,7 @@
   .timeline {
     position: relative;
     width: 100%;
+    padding-right: 0px;
   }
 
   .timeline::before {
@@ -109,17 +162,17 @@
     border: 4px solid transparent;
     min-width: 12px;
     height: 12px;
-    margin-left: 130px;
+    margin-left: 125px;
     background-color: hsl(181, 64%, 26%);
     border-radius: 100%;
     z-index: 2;
     position: relative;
-    left: 1px;
   }
 
   .timeline ul li .content {
     width: 100%;
     padding: 0px 20px 20px 20px;
+    padding-right: 0px;
   }
 
   .timeline ul li .date {
@@ -190,7 +243,8 @@
       <img
         class="hero"
         alt={tour.title}
-        src="https://lh3.googleusercontent.com/f7yM63HIwTGLHBtYOMiNyw_moiRbKnzBC7GtL8O5V1BZUCy4RH54tfiwt8tEP145jxHjuyP5JpKIYNa9NpLBfZBXs1RxWFJVD6kDcNE1h8YeRm9Yz5Qybhel0zbjNwF_Pi-oFNt6xCTumeRTq__NbNSvLGjKqlK354UsOjBPWuD60N656JRqeQUsiZP_CKUdTp5aMjDKUpYIisJAm8a6XraKeH7EdawsGfdciW58u9-DM5ENTBfm2kIqGB3vkOUetwbu1I7YF6bUnoMgnX9r2rC0qZOdhGSIyPCdOKayh725Z1vkyz2CvM6I_IOG1bBWaPZjbITlsdIMCAF8xZu2soVX_s7biu9tAWJPIeMB8EzW0U_DHOH_VbLz2NRV0yYToc9ViFWA3oZXAsVBjboWXumqMXPW9rOoDo25fwGNBNxQFUbHoothk1xnbpij9OiWDN5pM4NYK4POfeaPNc0nwmzd8vAo_fl3lsootLeVILj2XAjGQxgj_njXhOmQMTtchtLUvxvnRwMT0Q8Y4r5eSsOcIfYeMwklDfzTmQv3YOC_EQK1kRIlsJHv79uLzifwJS3zJqO_3og6PTto-G4HeHgyoN8u16vugoEruVEqIUFwnx-dF56gg0y7U7YeLl47Ajb3AUzLKcKdyj60mWHn5lkOA7ZLa1-9P6x64JwcFkJpqGG_1oGnwBv9Fnub1eAUl-tJbU-SKELloTNlv2NZIfmlYU5_fGWV72nOyVN8Uo05sYq7XQ=s1600" />
+        src="https://lh3.googleusercontent.com/f7yM63HIwTGLHBtYOMiNyw_moiRbKnzBC7GtL8O5V1BZUCy4RH54tfiwt8tEP145jxHjuyP5JpKIYNa9NpLBfZBXs1RxWFJVD6kDcNE1h8YeRm9Yz5Qybhel0zbjNwF_Pi-oFNt6xCTumeRTq__NbNSvLGjKqlK354UsOjBPWuD60N656JRqeQUsiZP_CKUdTp5aMjDKUpYIisJAm8a6XraKeH7EdawsGfdciW58u9-DM5ENTBfm2kIqGB3vkOUetwbu1I7YF6bUnoMgnX9r2rC0qZOdhGSIyPCdOKayh725Z1vkyz2CvM6I_IOG1bBWaPZjbITlsdIMCAF8xZu2soVX_s7biu9tAWJPIeMB8EzW0U_DHOH_VbLz2NRV0yYToc9ViFWA3oZXAsVBjboWXumqMXPW9rOoDo25fwGNBNxQFUbHoothk1xnbpij9OiWDN5pM4NYK4POfeaPNc0nwmzd8vAo_fl3lsootLeVILj2XAjGQxgj_njXhOmQMTtchtLUvxvnRwMT0Q8Y4r5eSsOcIfYeMwklDfzTmQv3YOC_EQK1kRIlsJHv79uLzifwJS3zJqO_3og6PTto-G4HeHgyoN8u16vugoEruVEqIUFwnx-dF56gg0y7U7YeLl47Ajb3AUzLKcKdyj60mWHn5lkOA7ZLa1-9P6x64JwcFkJpqGG_1oGnwBv9Fnub1eAUl-tJbU-SKELloTNlv2NZIfmlYU5_fGWV72nOyVN8Uo05sYq7XQ=s1600"
+        bind:this={heroImage} />
 
       <section>
         <h2
@@ -210,11 +264,24 @@
       </section>
 
       <section>
-        <h2
-          data-intro="Allow to define a scheduled itinerary with starting & end
-          times, or an itinerary with durations.">
-          Scheduled Itinerary
-        </h2>
+        <div
+          style="display: flex; align-items: center; justify-content:
+          space-between;">
+          <h2
+            id="itinerary"
+            data-intro="Allow to define a scheduled itinerary with starting &
+            end times, or an itinerary with durations.">
+            Scheduled Itinerary
+          </h2>
+          <Button
+            fill
+            round
+            href="/Editor"
+            style="background-color: rgb(24, 107, 109)">
+            Change Itinerary
+          </Button>
+        </div>
+
         <div class="timeline">
           <ul
             data-intro="Display itinerary items with a description and an
@@ -241,7 +308,7 @@
                       <div>
                         {i == 0 ? 'Start at:' : i == $tour.itineraries.length - 1 ? 'End at:' : 'Stopover at:'}
                         <a
-                          class="underline"
+                          class="underline external"
                           href={itinerary.attraction.url}
                           target="_blank">
                           {itinerary.attraction.title}
@@ -249,6 +316,7 @@
                       </div>
                       <a
                         title="Show in Tripadvisor"
+                        class="external"
                         href={itinerary.attraction.url}
                         target="_blank">
                         <div
@@ -265,10 +333,17 @@
       </section>
 
       <section>
+        <h2>Attractions Map</h2>
+        <div style="width: 100%; height: 600px">
+          <Map />
+        </div>
+      </section>
+
+      <section>
         <h2>What's Included</h2>
         <ul class="inclusions">
           {#each $tour.includes as include}
-            <li>
+            <li style="padding: 3px; font-weight: bold">
               <span style="margin-right: 5px" class="icon icon-plus" />
               {@html injectSmartLinks(include, attractions)}
             </li>

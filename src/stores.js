@@ -2,7 +2,7 @@
 
 import { writable } from 'svelte/store';
 
-let TOUR = {
+export let STANDARD_TOUR = {
   title:
     "John Gray’s Hong by Starlight from Phuket with Sea Kayaking & Loi Krathong Floating",
   subtitle:
@@ -39,7 +39,11 @@ let TOUR = {
       attraction: {
         title: "Ao Po Pier",
         url:
-          "https://www.tripadvisor.com/Attraction_Review-g2315811-d8559001-Reviews-Ao_Po_Pier-Pa_Khlok_Thalang_District_Phuket.html"
+          "https://www.tripadvisor.com/Attraction_Review-g2315811-d8559001-Reviews-Ao_Po_Pier-Pa_Khlok_Thalang_District_Phuket.html",
+        location: {
+          lat: 7.918059,
+          lng: 98.346466
+        }
       }
     },
     {
@@ -48,7 +52,11 @@ let TOUR = {
       attraction: {
         title: "Phang Nga Bay",
         url:
-          "https://www.tripadvisor.com/Attraction_Review-g1152716-d317707-Reviews-Phang_Nga_Bay-Ao_Phang_Nga_National_Park_Phang_Nga_Province.html"
+          "https://www.tripadvisor.com/Attraction_Review-g1152716-d317707-Reviews-Phang_Nga_Bay-Ao_Phang_Nga_National_Park_Phang_Nga_Province.html",
+        location: {
+          lat: 8.221881,
+          lng: 98.50035
+        }
       }
     },
     {
@@ -61,7 +69,11 @@ let TOUR = {
       attraction: {
         title: "Koh Panak",
         url:
-          "https://www.tripadvisor.com/Attraction_Review-g1152716-d7702675-Reviews-Koh_Panak_Cave-Ao_Phang_Nga_National_Park_Phang_Nga_Province.html"
+          "https://www.tripadvisor.com/Attraction_Review-g1152716-d7702675-Reviews-Koh_Panak_Cave-Ao_Phang_Nga_National_Park_Phang_Nga_Province.html",
+        location: {
+          lat: 8.190414,
+          lng: 98.490306
+        }
       }
     },
     {
@@ -70,11 +82,28 @@ let TOUR = {
     },
     {
       title: "Sightseeing & kayaking at Koh Hong",
-      schedule: "16:30 - 17:15",
+      schedule: "16:30 - 17:00",
       attraction: {
         title: "Koh Hong",
         url:
-          "https://www.tripadvisor.com/Attraction_Review-g1152716-d10594729-Reviews-Hongs_of_Phang_Nga-Ao_Phang_Nga_National_Park_Phang_Nga_Province.html"
+          "https://www.tripadvisor.com/Attraction_Review-g1152716-d10594729-Reviews-Hongs_of_Phang_Nga-Ao_Phang_Nga_National_Park_Phang_Nga_Province.html",
+        location: {
+          lat: 8.222773,
+          lng: 98.500712
+        }
+      }
+    },
+    {
+      title: "Explore Bat Cave",
+      schedule: "17:00 - 17:15",
+      attraction: {
+        title: "Bat Cave",
+        url:
+          "https://www.tripadvisor.com/Attraction_Review-g1152716-d7702675-Reviews-Koh_Panak_Cave-Ao_Phang_Nga_National_Park_Phang_Nga_Province.html",
+        location: {
+          lat: 8.191899,
+          lng: 98.488180
+        }
       }
     },
     {
@@ -83,7 +112,11 @@ let TOUR = {
       attraction: {
         title: "Ice Cream Cave",
         url:
-          "https://www.tripadvisor.com/Attraction_Review-g1152716-d13454969-Reviews-Ice_Cream_Cave-Ao_Phang_Nga_National_Park_Phang_Nga_Province.html"
+          "https://www.tripadvisor.com/Attraction_Review-g1152716-d13454969-Reviews-Ice_Cream_Cave-Ao_Phang_Nga_National_Park_Phang_Nga_Province.html",
+        location: {
+          lat: 8.197626,
+          lng: 98.492186
+        }
       }
     },
     {
@@ -100,7 +133,11 @@ let TOUR = {
       attraction: {
         title: "Koh Panak",
         url:
-          "https://www.tripadvisor.com/Attraction_Review-g1152716-d7702675-Reviews-Koh_Panak_Cave-Ao_Phang_Nga_National_Park_Phang_Nga_Province.html"
+          "https://www.tripadvisor.com/Attraction_Review-g1152716-d7702675-Reviews-Koh_Panak_Cave-Ao_Phang_Nga_National_Park_Phang_Nga_Province.html",
+        location: {
+          lat: 8.190414,
+          lng: 98.490306
+        }
       }
     },
     {
@@ -109,7 +146,11 @@ let TOUR = {
       attraction: {
         title: "Koh Panak",
         url:
-          "https://www.tripadvisor.com/Attraction_Review-g1152716-d7702675-Reviews-Koh_Panak_Cave-Ao_Phang_Nga_National_Park_Phang_Nga_Province.html"
+          "https://www.tripadvisor.com/Attraction_Review-g1152716-d7702675-Reviews-Koh_Panak_Cave-Ao_Phang_Nga_National_Park_Phang_Nga_Province.html",
+        location: {
+          lat: 8.190414,
+          lng: 98.490306
+        }
       }
     },
     {
@@ -143,13 +184,19 @@ let TOUR = {
 };
 
 export function createTour() {
-  var tourDefinition = localStorage.getItem('tour');
+  var tourDefinition = localStorage.getItem("tour");
   if (!tourDefinition) {
-    tourDefinition = TOUR;
+    tourDefinition = JSON.parse(JSON.stringify(STANDARD_TOUR));
   } else {
     tourDefinition = JSON.parse(tourDefinition);
   }
   let tour = writable(tourDefinition);
-  tour.subscribe(tour => localStorage.setItem("tour", JSON.stringify(tour)));
+  tour.subscribe(function (tour) {
+    localStorage.setItem("tour", JSON.stringify(tour));
+  });
   return tour;
 }
+
+export const mapsLoaded = writable(false);
+export const mapsLoading = writable(false);
+export const map = writable(null);

@@ -14,6 +14,13 @@ body {
 	font-family: "Poppins", Arial, Tahoma, "Bitstream Vera Sans", sans-serif;
 }
 
+a.link {
+	color: hsl(181, 64%, 26%);
+	text-decoration: none;
+	transition: 1s;
+	opacity: 1;
+}
+
 a {
 	color: hsl(181, 64%, 26%);
 	text-decoration: none;
@@ -24,13 +31,19 @@ a.underline {
 	border-bottom: dotted 1px;
 }
 
-a:hover {
+a:not(.button):hover {
 	transition: 1s;
-	color: hsla(181, 64%, 26%, 0.548);
+	color: hsla(181, 64%, 26%, 0.6);
+	opacity: 1;
 }
 
-a:visited {
-	color: hsl(181, 64%, 26%);
+a.link.active {
+	opacity: 1;
+}
+
+a.link:hover span {
+	transition: 1s;
+	opacity: 1;
 }
 
 label {

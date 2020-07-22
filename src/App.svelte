@@ -3,7 +3,7 @@
   import routes from "./routes.js";
 
   const f7params = {
-    theme: "aurora",
+    theme: "auto",
     routes,
     name: "A New Viator UX",
     id: "com.tripstorekrabi.viator.svelte",

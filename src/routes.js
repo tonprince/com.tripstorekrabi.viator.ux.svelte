@@ -9,10 +9,16 @@ export default [
   {
     path: '/',
     component: UX
-  }, {
+  },
+  {
     path: '/New-UI',
     component: UI,
-  }, {
+  },
+  {
+    path: '/New-UI/:scrollTo',
+    component: UI
+  },
+  {
     path: '/Editor',
     component: Editor
   },

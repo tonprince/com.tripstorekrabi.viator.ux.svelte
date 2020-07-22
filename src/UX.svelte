@@ -8,10 +8,10 @@
 </style>
 
 <Page>
-  <div class="page-content">
+  <div>
     <div style="margin: auto; height: 100%; max-width: 1000px; padding: 20px">
       <h1>A New Viator UX</h1>
-      <h2>A Step forward for supplier and users</h2>
+      <h2>A Step forward for suppliers and users</h2>
 
       <h3>Why this UX Design Proposal</h3>
       <div>
@@ -28,6 +28,14 @@
       <div>
         The current Viator strategy to move from an open market place to a more
         closed and controlled platform is the
+      </div>
+    </div>
+
+    <div
+      style="color: hsl(181, 64%, 26%); text-align: center; margin-top: 80px;
+      margin-bottom: 80px">
+      <div class="">
+        © Trip Store Krabi Co., Ltd. 2020. All Rights Reserved.
       </div>
     </div>
   </div>

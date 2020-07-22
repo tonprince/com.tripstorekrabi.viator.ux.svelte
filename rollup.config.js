@@ -3,8 +3,12 @@ import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import livereload from 'rollup-plugin-livereload';
 import { terser } from 'rollup-plugin-terser';
+import injectProcessEnv from 'rollup-plugin-inject-process-env';
+import dotenv from 'dotenv'
+dotenv.config()
 
 const production = !process.env.ROLLUP_WATCH;
+const googleApiKey = process.env.GOOGLE_API_KEY;
 
 export default {
 	input: 'src/main.js',
@@ -36,6 +40,10 @@ export default {
 			preferBuiltins: false
 		}),
 		commonjs(),
+
+		injectProcessEnv({
+			GOOGLE_API_KEY: googleApiKey
+		}),
 
 		// In dev mode, call `npm run start` once
 		// the bundle has been generated
