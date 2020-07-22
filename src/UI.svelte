@@ -265,10 +265,11 @@
 
       <section>
         <div
-          style="display: flex; align-items: center; justify-content:
-          space-between;">
+          style="margin-top: 40px; display: flex; align-items: center;
+          justify-content: space-between;">
           <h2
             id="itinerary"
+            style="margin-top: 0px"
             data-intro="Allow to define a scheduled itinerary with starting &
             end times, or an itinerary with durations.">
             Scheduled Itinerary
