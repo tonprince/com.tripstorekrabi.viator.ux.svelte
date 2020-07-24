@@ -46,14 +46,14 @@
       <h3>Why this UX Design Proposal</h3>
       <p>
         After almost 10 years of working with Viator and Tripadvisor, we wanted
-        to give you back some important feedbacks from the supplier's point of
-        view. Therefore we created this dedicated website to visualize our
-        ideas. I think we speak for many operators in the tourism field which
-        face the same bottlenecks and issues when creating and maintaining new
-        products on the Viator supplier website. Due to the more intense
-        competition from other OTAs such as GetYourGuide, Expedia, Klook etc,
-        there is a huge need to optimize the product UI appearance on Viator and
-        Tripadvisor website to have an outstanding experience.
+        to give you some important feedbacks from the supplier's point of view.
+        Therefore we created this dedicated website to visualize our ideas. I
+        think we speak for many operators in the tourism field which face the
+        same bottlenecks and issues when creating and maintaining new products
+        on the Viator supplier website. Due to the more intense competition from
+        other OTAs such as GetYourGuide, Expedia, Klook etc, there is a huge
+        need to optimize the product UI appearance on Viator and Tripadvisor
+        website to have an outstanding experience.
       </p>
       <p>
         The current Viator strategy to move from an open market place to a more
@@ -139,7 +139,7 @@
 
       <hr class="new" />
 
-      <div class="title">Hotel pickup</div>
+      <div class="title">Hotel Pickup</div>
       The current solution for defining a hotel pickup service for a tour,
       activity or transfer is not satisfactory. Using a fixed hotel list, or
       defining an area in Google Maps does not cover all usecases and is a very
@@ -170,7 +170,7 @@
 
       <hr class="new" />
 
-      <div class="title">Email address of user</div>
+      <div class="title">Email Address of User</div>
       Currently it is not possible to reach the customer directly by email, for
       getting more informations such as hotel room, dietary restrictions or in
       an emergency. You give us the name of the customer, sometimes even all
