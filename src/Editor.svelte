@@ -30,6 +30,7 @@
   $: itineraries = $tour.itineraries;
   let loading = false;
   let attractions = null;
+  let searchbarHint = null;
   let selectedItinerary = null;
   let searchbarComponent;
   let showSorter = false;
@@ -54,10 +55,12 @@
     let timeout;
     searchbarComponent.instance().on("search", function(searchbar) {
       let query = searchbar.query.trim();
-      if (query.length === 0) {
+      if (query.length < 3) {
+        searchbarHint = "Search string must contain at least three characters.";
         attractions = [];
         return;
       }
+      searchbarHint = null;
 
       if (timeout) {
         clearInterval(timeout);
@@ -416,7 +419,9 @@
       {:else}
         <List class="search-list" style="margin-top: 0px">
           {#if attractions}
-            {#if attractions.length == 0}
+            {#if searchbarHint}
+              <ListItem title={searchbarHint} />
+            {:else if attractions.length == 0}
               <ListItem title="No attractions found" />
             {:else}
               {#each attractions as item}
