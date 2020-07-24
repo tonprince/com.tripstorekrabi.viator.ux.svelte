@@ -32,6 +32,7 @@
   let attractions = null;
   let selectedItinerary = null;
   let searchbarComponent;
+  let showSorter = false;
 
   f7.on("sortableSort", function(item, data) {
     let newItineraries = arrayMove(itineraries, data.from, data.to);
@@ -124,86 +125,127 @@
 <Page {onPageBeforeOut} {onPageBeforeRemove}>
   <div class="page-content">
     <div style="margin: auto; height: 100%; max-width: 1000px; padding: 20px">
-      <h1>Itinerary Editor</h1>
+      <div
+        style="margin-top: 40px; display: flex; align-items: center;
+        justify-content: space-between;">
+        <h1>Itinerary Editor</h1>
+        <Button
+          on:click={function() {
+            showSorter = !showSorter;
+          }}
+          fill
+          round
+          href="/Editor"
+          data-sortable=".sortable"
+          class="sortable-toggle"
+          style="font-weight: bold; margin-right: 10px; background-color:
+          rgb(24, 107, 109)">
+          {showSorter ? 'Disable Sorting' : 'Enable Sorting'}
+          <span
+            style="font-weight: bold; margin-left: 2px"
+            class="icon icon-change" />
+        </Button>
+      </div>
 
       {#if itineraries.length == 0}
         <div>No itinerary items added yet.</div>
       {:else}
         <List
           sortable={true}
-          class="sortable-enabled"
+          class="sortable"
           data-sortable-move-elements="false">
           {#each itineraries as itinerary}
             <ListItem>
-              <div slot="title">
+              <span
+                class="icon icon-circle"
+                slot="media"
+                style="color: rgb(24, 107, 109);" />
+              <div
+                style="max-height: inherit; display: flex; justify-content:
+                space-between; width: 100%; align-items: center; flex-wrap:
+                wrap;"
+                class="item-text">
                 <Link
-                  style="font-weight: bold"
+                  style="font-weight: bold; margin-top: 5px; margin-right: 5px"
                   on:click={function() {
                     selectedItinerary = itinerary;
                     openItinerarySheet();
                   }}>
                   {itinerary.schedule + ': ' + itinerary.title}
                 </Link>
-              </div>
 
-              <div slot="after">
-                {#if itinerary.attraction}
-                  <Button
-                    round
-                    outline
-                    small
-                    style="color: rgb(24, 107, 109); border-color: rgb(24, 107,
-                    109); font-weight: bold; margin-right: 10px"
-                    on:click={function() {
-                      selectedItinerary = itinerary;
-                      openAttractionSheet();
-                      searchbarComponent
-                        .instance()
-                        .search(selectedItinerary.attraction.title);
-                    }}>
-                    {itinerary.attraction.title}
-                  </Button>
-                {/if}
-              </div>
-              <div slot="after">
-                <div style="display: flex">
-                  <Button
-                    fill
-                    small
-                    style="background-color: rgb(24, 107, 109);"
-                    on:click={function() {
-                      selectedItinerary = itinerary;
-                      openItinerarySheet();
-                    }}>
-                    <span title="Change attraction" class="icon icon-pencil" />
-                  </Button>
+                <div style="display: flex; margin-top: 5px;">
+                  {#if itinerary.attraction}
+                    <Button
+                      round
+                      fill
+                      outline
+                      small
+                      dotted
+                      style="border-color: rgb(24, 107, 109); background-color:
+                      rgb(24, 107, 109); color: white; font-weight: bold;
+                      margin-right: 10px"
+                      on:click={function() {
+                        selectedItinerary = itinerary;
+                        openAttractionSheet();
+                        searchbarComponent
+                          .instance()
+                          .search(selectedItinerary.attraction.title);
+                      }}>
+                      {itinerary.attraction.title}
+                    </Button>
+                  {:else}
+                    <Button
+                      round
+                      outline
+                      small
+                      style="color: rgb(24, 107, 109); border-color: rgb(24,
+                      107, 109); font-weight: bold; margin-right: 10px"
+                      on:click={function() {
+                        selectedItinerary = itinerary;
+                        openAttractionSheet();
+                      }}>
+                      Link Attraction
+                    </Button>
+                  {/if}
 
-                  <Button
-                    style="margin-left: 8px"
-                    fill
-                    small
-                    color="red"
-                    on:click={function() {
-                      f7.dialog.confirm(
-                        'Are you sure you want to remove this item?',
-                        'Remove Itinerary Item',
-                        () => {
-                          let newItineraries = itineraries.filter(
-                            item => item !== itinerary
-                          );
-                          $tour.itineraries = newItineraries;
-                          tour.set($tour);
-                        }
-                      );
-                    }}>
-                    <span title="Remove attraction" class="icon icon-cross" />
-                  </Button>
+                  <div style="display: flex">
+                    <Button
+                      fill
+                      small
+                      style="background-color: rgb(24, 107, 109);"
+                      on:click={function() {
+                        selectedItinerary = itinerary;
+                        openItinerarySheet();
+                      }}>
+                      <span
+                        title="Change attraction"
+                        class="icon icon-pencil" />
+                    </Button>
+
+                    <Button
+                      style="margin-left: 8px"
+                      fill
+                      small
+                      color="red"
+                      on:click={function() {
+                        f7.dialog.confirm(
+                          'Are you sure you want to remove this item?',
+                          'Remove Itinerary Item',
+                          () => {
+                            let newItineraries = itineraries.filter(
+                              item => item !== itinerary
+                            );
+                            $tour.itineraries = newItineraries;
+                            tour.set($tour);
+                          }
+                        );
+                      }}>
+                      <span title="Remove attraction" class="icon icon-cross" />
+                    </Button>
+                  </div>
                 </div>
               </div>
-              <span
-                class="icon icon-circle"
-                slot="media"
-                style="color: rgb(24, 107, 109);" />
             </ListItem>
           {/each}
         </List>
@@ -299,6 +341,21 @@
               {:else}No attraction linked{/if}
             </div>
             <div style="display: flex" slot="after">
+              {#if selectedItinerary.attraction}
+                <Button
+                  outline
+                  small
+                  round
+                  color="red"
+                  style="font-weight: bold; margin-right: 10px"
+                  on:click={function() {
+                    delete selectedItinerary.attraction;
+                    selectedItinerary = selectedItinerary;
+                    tour.set($tour);
+                  }}>
+                  Remove attraction
+                </Button>
+              {/if}
               <Button
                 style="background-color: rgb(24, 107, 109)"
                 fill
@@ -438,7 +495,7 @@
       href="/New-UI/itinerary" />
     <Link
       text="Reset Itinerary"
-      style="color: red"
+      style="color: red;"
       icon="icon icon-reload"
       on:click={function() {
         f7.dialog.confirm(

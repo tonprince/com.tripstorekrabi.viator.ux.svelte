@@ -181,7 +181,6 @@
   }
 
   .timeline ul li .date span {
-    color: hsl(181, 64%, 26%);
     background-color: hsla(181, 64%, 26%, 0.103);
     width: 100px;
     padding: 5px 10px;
@@ -215,7 +214,6 @@
     padding-bottom: 5px;
     padding-left: 15px;
     padding-right: 15px;
-    color: hsl(181, 64%, 26%);
     background-color: hsla(181, 64%, 26%, 0.103);
     margin-top: 0;
     border-bottom-left-radius: 10px;
@@ -278,7 +276,7 @@
             fill
             round
             href="/Editor"
-            style="background-color: rgb(24, 107, 109)">
+            style="background-color: rgb(24, 107, 109); font-weight: bold">
             Change Itinerary
             <span
               style="font-weight: bold; margin-left: 2px"
@@ -402,7 +400,7 @@
   <Toolbar style="font-size: 0.7rem" tabbar labels position="bottom">
     <Link
       text="Show Hints"
-      style="color: red"
+      style="color: red;"
       icon="icon icon-lightbulb"
       on:click={function() {
         introJs().start();

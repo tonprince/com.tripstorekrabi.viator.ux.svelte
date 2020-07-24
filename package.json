@@ -1,5 +1,5 @@
 {
-  "name": "com.tripstorekrabi.viator.itinerary",
+  "name": "com.tripstorekrabi.viator.ux.svelte",
   "version": "1.0.0",
   "description": "The Svelte web application for Viator UI Design Case Study",
   "private": true,
