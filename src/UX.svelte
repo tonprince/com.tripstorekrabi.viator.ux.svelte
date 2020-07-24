@@ -139,6 +139,19 @@
 
       <hr class="new" />
 
+      <div class="title">Highlights</div>
+      Currently it is not possible to define our own highlights for each
+      product. For some products the highlights are showed on the website but
+      cannot be edited. We would like to be able to define our own highlights.
+      We are convinced that we, the suppliers, know best what are our selling
+      points.
+      <div class="suggestion">
+        Allow to Add Custom Highlights
+        <span class="icon icon-lightbulb" />
+      </div>
+
+      <hr class="new" />
+
       <div class="title">Hotel Pickup</div>
       The current solution for defining a hotel pickup service for a tour,
       activity or transfer is not satisfactory. Using a fixed hotel list, or
