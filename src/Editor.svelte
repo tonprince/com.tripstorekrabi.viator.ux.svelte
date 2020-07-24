@@ -1,5 +1,5 @@
 <script>
-  import { onMount } from "svelte";
+  import { onMount, onDestroy } from "svelte";
   import {
     f7,
     Page,
@@ -72,6 +72,40 @@
     });
   });
 
+  let itinerarySheet;
+  function openItinerarySheet() {
+    if (!itinerarySheet) {
+      itinerarySheet = f7.sheet.create({ el: ".itinerarySheet" });
+    }
+    itinerarySheet.open();
+  }
+
+  let attractionSheet;
+  function openAttractionSheet() {
+    if (!attractionSheet) {
+      attractionSheet = f7.sheet.create({ el: ".attractionSheet" });
+    }
+    attractionSheet.open();
+  }
+
+  function onPageBeforeOut() {
+    if (itinerarySheet) {
+      itinerarySheet.close();
+    }
+    if (attractionSheet) {
+      attractionSheet.close();
+    }
+  }
+
+  function onPageBeforeRemove() {
+    if (itinerarySheet) {
+      itinerarySheet.destroy();
+    }
+    if (attractionSheet) {
+      attractionSheet.destroy();
+    }
+  }
+
   function saveItinerary(itinerary) {
     if (itineraries.indexOf(itinerary) === -1) {
       itineraries.push(itinerary);
@@ -87,7 +121,7 @@
   }
 </style>
 
-<Page>
+<Page {onPageBeforeOut} {onPageBeforeRemove}>
   <div class="page-content">
     <div style="margin: auto; height: 100%; max-width: 1000px; padding: 20px">
       <h1>Itinerary Editor</h1>
@@ -103,9 +137,10 @@
             <ListItem>
               <div slot="title">
                 <Link
+                  style="font-weight: bold"
                   on:click={function() {
                     selectedItinerary = itinerary;
-                    f7.sheet.open('.itinerarySheet');
+                    openItinerarySheet();
                   }}>
                   {itinerary.schedule + ': ' + itinerary.title}
                 </Link>
@@ -121,7 +156,7 @@
                     109); font-weight: bold; margin-right: 10px"
                     on:click={function() {
                       selectedItinerary = itinerary;
-                      f7.sheet.open('.attractionSheet');
+                      openAttractionSheet();
                       searchbarComponent
                         .instance()
                         .search(selectedItinerary.attraction.title);
@@ -138,7 +173,7 @@
                     style="background-color: rgb(24, 107, 109);"
                     on:click={function() {
                       selectedItinerary = itinerary;
-                      f7.sheet.open('.itinerarySheet');
+                      openItinerarySheet();
                     }}>
                     <span title="Change attraction" class="icon icon-pencil" />
                   </Button>
@@ -178,6 +213,12 @@
         margin-bottom: 80px">
         <div class="">
           © Trip Store Krabi Co., Ltd. 2020. All Rights Reserved.
+          <br />
+          <a
+            class="link underline external"
+            href="mailto:info@tripstorekrabi.com">
+            Contact Us
+          </a>
         </div>
       </div>
     </div>
@@ -187,7 +228,12 @@
     <Toolbar>
       <div class="left" />
       <div class="right">
-        <Link sheetClose>Close</Link>
+        <Link
+          on:click={function() {
+            itinerarySheet.close();
+          }}>
+          Close
+        </Link>
       </div>
     </Toolbar>
 
@@ -195,7 +241,7 @@
       <h1>Edit Itinerary Item</h1>
 
       {#if selectedItinerary}
-        <List noHairlinesMd mediaList style="margin-top: 0px">
+        <List mediaList style="margin-top: 0px">
           <ListInput
             label="Schedule"
             type="text"
@@ -254,18 +300,19 @@
             </div>
             <div style="display: flex" slot="after">
               <Button
+                style="background-color: rgb(24, 107, 109)"
                 fill
                 small
                 round
                 on:click={function() {
-                  f7.sheet.open('.attractionSheet');
+                  openAttractionSheet();
                   if (selectedItinerary.attraction) {
                     searchbarComponent
                       .instance()
                       .search(selectedItinerary.attraction.title);
                   }
                 }}>
-                {@html (selectedItinerary.attraction ? 'Change' : 'Link') + "<span style='margin-left: 8px' class='icon icon-link'></span>"}
+                {@html (selectedItinerary.attraction ? 'Change' : 'Link') + "<span style='font-size: 1rem; font-weight: bold; margin-left: 4px; vertical-align: sub' class='icon icon-link'></span>"}
               </Button>
             </div>
           </ListItem>
@@ -280,7 +327,7 @@
       <div class="right">
         <Link
           on:click={function() {
-            f7.sheet.close('.attractionSheet');
+            attractionSheet.close();
           }}>
           Close
         </Link>
@@ -327,7 +374,6 @@
                       on:click={function() {
                         getAttractionDetails(item.providerReference).then(
                           function(details) {
-                            console.log(details);
                             window.open(details.url);
                           }
                         );
@@ -355,11 +401,15 @@
                             }
                             selectedItinerary = selectedItinerary;
                             tour.set($tour);
-                            f7.sheet.close('.attractionSheet');
+                            attractionSheet.close();
                           }
                         );
                       }}>
                       Choose
+                      <span
+                        style="font-size: 1.0rem; margin-left: 1px; font-weight:
+                        bold; vertical-align: sub"
+                        class="icon icon-choose" />
                     </Button>
                   </div>
                 </ListItem>
@@ -379,7 +429,7 @@
       icon="icon icon-plus"
       on:click={function() {
         selectedItinerary = { title: '', schedule: '' };
-        f7.sheet.open('.itinerarySheet');
+        openItinerarySheet();
       }} />
     <Link
       text="Show UI"

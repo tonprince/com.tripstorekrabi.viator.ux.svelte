@@ -41,8 +41,8 @@ export let STANDARD_TOUR = {
         url:
           "https://www.tripadvisor.com/Attraction_Review-g2315811-d8559001-Reviews-Ao_Po_Pier-Pa_Khlok_Thalang_District_Phuket.html",
         location: {
-          lat: 7.918059,
-          lng: 98.346466
+          lat: 8.061265,
+          lng: 98.432329
         }
       }
     },

@@ -160,9 +160,9 @@
 
   .point {
     border: 4px solid transparent;
-    min-width: 12px;
-    height: 12px;
-    margin-left: 125px;
+    min-width: 16px;
+    height: 16px;
+    margin-left: 123px;
     background-color: hsl(181, 64%, 26%);
     border-radius: 100%;
     z-index: 2;
@@ -269,7 +269,7 @@
           justify-content: space-between;">
           <h2
             id="itinerary"
-            style="margin-top: 0px"
+            style="margin-top: 0px; margin-bottom: 0px"
             data-intro="Allow to define a scheduled itinerary with starting &
             end times, or an itinerary with durations.">
             Scheduled Itinerary
@@ -280,13 +280,18 @@
             href="/Editor"
             style="background-color: rgb(24, 107, 109)">
             Change Itinerary
+            <span
+              style="font-weight: bold; margin-left: 2px"
+              class="icon icon-change" />
           </Button>
         </div>
 
-        <div class="timeline">
-          <ul
-            data-intro="Display itinerary items with a description and an
-            optional link to the related attraction/place in Tripadvisor.">
+        <div
+          class="timeline"
+          data-intro="Display itinerary items with schedule/duration,
+          description and an optional link to the related attraction on
+          Tripadvisor.">
+          <ul>
             {#each $tour.itineraries as itinerary, i}
               <li>
                 <div class="date">
@@ -381,6 +386,12 @@
         margin-bottom: 80px">
         <div class="">
           © Trip Store Krabi Co., Ltd. 2020. All Rights Reserved.
+          <br />
+          <a
+            class="link underline external"
+            href="mailto:info@tripstorekrabi.com">
+            Contact Us
+          </a>
         </div>
       </div>
     </div>

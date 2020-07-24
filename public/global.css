@@ -8,10 +8,11 @@ html, body {
 
 body {
 	margin: 0px;
-	color: #717479;
+	color: #5d5f63;
 	line-height: 1.5;
 	box-sizing: border-box;
 	font-family: "Poppins", Arial, Tahoma, "Bitstream Vera Sans", sans-serif;
+	font-size: 15px;
 }
 
 a.link {

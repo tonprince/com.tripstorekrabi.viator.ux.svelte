@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'icomoon';
-  src:  url('fonts/icomoon.eot?aegvl7');
-  src:  url('fonts/icomoon.eot?aegvl7#iefix') format('embedded-opentype'),
-    url('fonts/icomoon.ttf?aegvl7') format('truetype'),
-    url('fonts/icomoon.woff?aegvl7') format('woff'),
-    url('fonts/icomoon.svg?aegvl7#icomoon') format('svg');
+  src:  url('fonts/icomoon.eot?moosih');
+  src:  url('fonts/icomoon.eot?moosih#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?moosih') format('truetype'),
+    url('fonts/icomoon.woff?moosih') format('woff'),
+    url('fonts/icomoon.svg?moosih#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -25,14 +25,23 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-choose:before {
+  content: "\e90d";
+}
+.icon-change:before {
+  content: "\e90c";
+}
+.icon-solution:before {
+  content: "\e90b";
+}
+.icon-lightbulb:before {
+  content: "\e90a";
+}
 .icon-myLocation:before {
   content: "\e909";
 }
 .icon-external-link:before {
   content: "\e908";
-}
-.icon-lightbulb:before {
-  content: "\f0eb";
 }
 .icon-circle:before {
   content: "\f111";

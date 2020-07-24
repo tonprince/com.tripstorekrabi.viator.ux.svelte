@@ -7,7 +7,15 @@
     routes,
     name: "A New Viator UX",
     id: "com.tripstorekrabi.viator.svelte",
-    root: "#app"
+    root: "#app",
+    on: {
+      pageAfterOut: function(page) {
+        page.el.style.display = "none";
+      },
+      pageAfterIn: function(page) {
+        page.el.style.display = "inherit";
+      }
+    }
   };
 </script>
 
