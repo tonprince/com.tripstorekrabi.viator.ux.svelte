@@ -357,7 +357,7 @@
                 </Button>
               {/if}
               <Button
-                style="background-color: rgb(24, 107, 109)"
+                style="background-color: rgb(24, 107, 109); font-weight: bold;"
                 fill
                 small
                 round
@@ -442,7 +442,8 @@
                       fill
                       small
                       round
-                      style="background-color: rgb(24, 107, 109)"
+                      style="background-color: rgb(24, 107, 109); font-weight:
+                      bold"
                       on:click={function() {
                         getAttractionDetails(item.providerReference).then(
                           function(details) {
