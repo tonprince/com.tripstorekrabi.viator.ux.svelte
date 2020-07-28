@@ -60,8 +60,9 @@
         closed and controlled platform is the right decision. We totally agree
         that someone of your team reviews the content of a product after it has
         been submitted. We further think you should allow the supplier to be
-        more flexible in writing descriptions about the prodct as now everything
-        is double-checked to maintain high quality standards.
+        more flexible in writing product descriptions, highlights and real
+        itineraries as now everything is double-checked to maintain high quality
+        standards.
       </p>
 
       <hr class="new" />
@@ -145,8 +146,17 @@
       cannot be edited. We would like to be able to define our own highlights.
       We are convinced that we, the suppliers, know best what are our selling
       points.
+      <br />
+      <br />
+      The number of items should be limited to 5 as a higher number is
+      overburdened for the reader and he/she will not entirely read a too long
+      list.
       <div class="suggestion">
         Allow to Add Custom Highlights
+        <span class="icon icon-lightbulb" />
+      </div>
+      <div class="suggestion">
+        Limit the Number of Highlights to 5
         <span class="icon icon-lightbulb" />
       </div>
 
