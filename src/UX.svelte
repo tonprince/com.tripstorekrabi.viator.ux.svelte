@@ -236,7 +236,7 @@
       others. We would like to give the customers the possibility to buy these
       add-ons in advance directly on the Viator website but at the same price as
       if buying local. Therefore we recommend to allow add-ons with a
-      zero-commission approach like other OTAs such as GYG already offer do.
+      zero-commission approach like other OTAs such as GYG already do.
       <div class="suggestion">
         Allow add-ons at zero commission
         <span class="icon icon-lightbulb" />

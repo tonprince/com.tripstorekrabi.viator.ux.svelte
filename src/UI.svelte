@@ -78,30 +78,37 @@
   });
 
   function injectSmartLinks(text, attractions) {
+    let processed = [];
+    let dict = {};
     attractions.forEach(function(attraction) {
-      let regexp = new RegExp(
-        "(w*" + attraction.title + "w*)(?=S*['’])?([a-zA-Z'’]+)?",
-        "gmi"
-      );
-      function replacer(match, p1, p2, p3, offset, string) {
-        let dataIntro = !smartLinkIntroAdded
-          ? "data-intro='Insert smart links for occurrences of Tripadvisor attractions & places into the tour summary and description.'"
-          : "";
-        smartLinkIntroAdded = true;
-        return (
-          "<a class='external' " +
-          dataIntro +
-          " href='" +
-          attraction.url +
-          "' target='_blank'>" +
-          match +
-          "</a>"
-        );
+      let key = attraction.title.toLowerCase();
+      if (processed.indexOf(key) == -1) {
+        processed.push(key);
+        dict[key] = attraction.url;
+        dict[key + "'s"] = attraction.url;
+        dict[key + "’s"] = attraction.url;
       }
-      text = text.replace(regexp, replacer);
     });
+    let keys = processed.join("|");
+    let regExp = new RegExp(
+      "\\b(" + keys + ")\\b(?=S*['’])?([a-zA-Z'’]+)?",
+      "gmi"
+    );
 
-    return text;
+    return text.replace(regExp, function(match, p1, p2, offset, word) {
+      let dataIntro = !smartLinkIntroAdded
+        ? "data-intro='Insert smart links for occurrences of Tripadvisor attractions & places into the product content.'"
+        : "";
+      return (
+        "<a target='_blank' class='external' " +
+        dataIntro +
+        " href='" +
+        dict[match.toLowerCase()] +
+        "'>" +
+        match +
+        "</a>"
+      );
+    });
   }
 </script>
 
