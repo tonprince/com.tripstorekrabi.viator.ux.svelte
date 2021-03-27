@@ -191,7 +191,7 @@ export function createTour() {
     tourDefinition = JSON.parse(tourDefinition);
   }
   let tour = writable(tourDefinition);
-  tour.subscribe(function (tour) {
+  tour.subscribe((tour) => {
     localStorage.setItem("tour", JSON.stringify(tour));
   });
   return tour;

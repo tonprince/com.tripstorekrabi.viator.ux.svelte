@@ -21,7 +21,7 @@ export function initMapService(callback) {
   if (mapsLoadedValue) {
     callback();
   } else if (!mapsLoadingValue) {
-    window.initMap = function () {
+    window.initMap = () => {
       mapsLoaded.set(true);
       delete window.initMap;
       callback();
